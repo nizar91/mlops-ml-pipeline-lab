@@ -1,0 +1,23 @@
+[project]
+name = "ml-houseprice-prediction"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "TouyeAchille",email = "touyejunior@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas (>=2.3.3,<3.0.0)",
+    "numpy (>=2.3.5,<3.0.0)",
+    "dvc (>=3.64.1,<4.0.0)",
+    "scikit-learn (>=1.7.2,<2.0.0)",
+    "joblib (>=1.5.2,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "ml_houseprice_prediction"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
