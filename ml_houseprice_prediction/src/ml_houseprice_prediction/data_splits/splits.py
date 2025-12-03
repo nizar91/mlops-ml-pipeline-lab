@@ -100,6 +100,15 @@ def splits_data(df: pd.DataFrame) -> pd.DataFrame:
     # 👉 YOUR CODE HERE:
     # - Use train_test_split(df, ...)
     # - Return df_train, df_test
+    df_train, df_test = train_test_split(
+        df,
+        test_size=0.2,
+        random_state=42,
+        shuffle=True,
+    )
+
+    logger.info(f"Train shape: {df_train.shape}, Test shape: {df_test.shape}")
+    return df_train, df_test
 
 
 # -------------------------------------------------------------------
@@ -128,6 +137,15 @@ def save_data(df_train: pd.DataFrame, df_test: pd.DataFrame) -> Path:
         # Save train_data.csv and test_data.csv in OUTPUT_DIR
 
         logger.info(f"Save split data : {filename}: into datastores.")
+        file_paths = {
+        "train_data.csv": df_train,
+        "test_data.csv": df_test,
+    }
+    for filename, df in file_paths.items():
+        # Save train_data.csv and test_data.csv in OUTPUT_DIR
+        output_path = OUTPUT_DIR / filename
+        df.to_csv(output_path, index=False)
+        logger.info(f"Saved split data: {filename} into datastores at {output_path}")
 
 
 # -------------------------------------------------------------------
@@ -169,7 +187,16 @@ def main() -> None:
     # - Call df_clean=load_data(...) with args.input_data_path
     # - Call df_train, df_test=split_data(...) on the clean data `df_clean`
     # - Call save_data(...) on the split data `df_train`, `df_test`
+    # Charger les données propres (ou brutes si déjà nettoyées)
+    df_clean = load_data(args.input_data_path)
 
+    # Split en train / test
+    df_train, df_test = splits_data(df_clean)
+
+    # Sauvegarder les deux fichiers
+    save_data(df_train, df_test)
+
+    logger.info("Data splitting pipeline completed successfully.")
 
 
 if __name__ == "__main__":
